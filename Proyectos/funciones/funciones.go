@@ -67,5 +67,8 @@ func main() {
 
 	mostrarnum(5, 10, 15, 20, 25)
 	fmt.Println("La sumatoria es: ", sumatoria(1, 2, 3, 4, 5, 6, 7, 8, 9))
+	fmt.Println("")
+}
+func avergeGrade(suma float64) {
 
 }
