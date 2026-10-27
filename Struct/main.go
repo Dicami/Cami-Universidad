@@ -14,19 +14,40 @@ func main() {
 		Productos: make(map[int]Producto),
 	}
 
-	product1 := NuevoProducto(1, "Celular", 300, 4)
-	product2 := NuevoProducto(2, "Comedor", 10000, 20)
-	product3 := NuevoProducto(3, "Television", 150, 10)
+	var id int
+	var nombre string
+	var precio float64
+	var cantidad int
 
-	inventario.AgregarProducto(product1)
-	inventario.AgregarProducto(product2)
-	inventario.AgregarProducto(product3)
+	fmt.Println("Ingresar prodcutos")
+
+	for i := 0; i < 3; i++ {
+		fmt.Println("Producto", i+1)
+
+		fmt.Print("Ingrese el ID: ")
+		fmt.Scan(&id)
+
+		fmt.Print("Ingrese el nombre: ")
+		fmt.Scan(&nombre)
+
+		fmt.Print("Ingrese el precio: ")
+		fmt.Scan(&precio)
+
+		fmt.Print("Ingrese la cantidad: ")
+		fmt.Scan(&cantidad)
+
+		producto := NuevoProducto(id, nombre, precio, cantidad)
+		inventario.AgregarProducto(producto)
+	}
 
 	fmt.Println("Lista de prodcutos")
 	inventario.ListarProductos()
 
-	fmt.Println("Buscar products")
-	producto, existe := inventario.BuscarProducto(2)
+	fmt.Println("Buscar productos")
+	fmt.Print("Ingrese el ID del producto que desea buscar: ")
+	fmt.Scan(&id)
+
+	producto, existe := inventario.BuscarProducto(id)
 
 	if existe {
 		producto.MostrarInfo()
@@ -34,19 +55,38 @@ func main() {
 		fmt.Println("Producto no encontrado")
 	}
 
-	fmt.Println("Actualizar")
-	product1.ActualizarPrecio(700.00)
-	product1.ActualizarCantidad(8)
-	inventario.AgregarProducto(product1)
+	fmt.Println("Actualizar productos")
+	fmt.Print("Ingrese el ID del producto que desea actualizar: ")
+	fmt.Scan(&id)
 
-	product1.MostrarInfo()
+	producto, existe = inventario.BuscarProducto(id)
 
-	fmt.Println("Eliminar producto")
-	inventario.EliminarProducto(3)
+	if existe {
+		fmt.Print("Ingrese el nuevo precio: ")
+		fmt.Scan(&precio)
 
-	fmt.Println("Inventario final con el prodcuto eliminado")
+		fmt.Print("Ingrese la nueva cantidad: ")
+		fmt.Scan(&cantidad)
+
+		producto.ActualizarPrecio(precio)
+		producto.ActualizarCantidad(cantidad)
+
+		inventario.AgregarProducto(producto)
+
+		fmt.Println("Producto actualizado:")
+		producto.MostrarInfo()
+	} else {
+		fmt.Println("Producto no encontrado")
+	}
+
+	fmt.Println("Eliminar prodcucto")
+	fmt.Print("Ingrese el ID del producto que desea eliminar: ")
+	fmt.Scan(&id)
+
+	inventario.EliminarProducto(id)
+
+	fmt.Println("Inventario con el producto eliminado")
 	inventario.ListarProductos()
-
 }
 
 func NuevoProducto(id int, nombre string, precio float64, cantidad int) Producto {
